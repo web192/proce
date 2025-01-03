@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Actividades - Editable</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #f4b400;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Menú lateral */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -270px;
+            width: 270px;
+            height: 100%;
+            background: linear-gradient(135deg, #333, #444);
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            transition: left 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .menu.open {
+            left: 0;
+        }
+
+        .menu h2 {
+            font-size: 1.8rem;
+            color: #f4b400;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f4b400;
+            padding-bottom: 10px;
+        }
+
+        .menu ul {
+            list-style: none;
+        }
+
+        .menu ul li {
+            margin: 15px 0;
+        }
+
+        .menu ul li a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .menu ul li a:hover {
+            background: #f4b400;
+            color: #121212;
+        }
+
+        /* Ícono de hamburguesa */
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 4px;
+            background-color: #f4b400;
+            margin: 5px 0;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Animación del ícono de hamburguesa cuando está abierto */
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Contenido principal */
+        .calendar {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .phase {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .phase:hover {
+            background-color: #f4b400;
+            transform: translateY(-5px);
+            color: #121212;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menú lateral -->
+    <div id="menu" class="menu">
+        <h2>Libros</h2>
+        <ul>
+            <li><a href="libros/libro1.pdf" target="_blank">Libro 1</a></li>
+            <li><a href="libros/libro2.pdf" target="_blank">Libro 2</a></li>
+            <li><a href="libros/libro3.pdf" target="_blank">Libro 3</a></li>
+            <li><a href="https://www.ejemplo.com/libro4" target="_blank">Libro 4</a></li>
+            <li><a href="libros/libro5.pdf" target="_blank">Libro 5</a></li>
+            <li><a href="libros/libro6.pdf" target="_blank">Libro 6</a></li>
+            <li><a href="libros/libro7.pdf" target="_blank">Libro 7</a></li>
+            <li><a href="libros/libro8.pdf" target="_blank">Libro 8</a></li>
+            <li><a href="libros/libro9.pdf" target="_blank">Libro 9</a></li>
+            <li><a href="libros/libro10.pdf" target="_blank">Libro 10</a></li>
+            <li><a href="libros/libro11.pdf" target="_blank">Libro 11</a></li>
+            <li><a href="libros/libro12.pdf" target="_blank">Libro 12</a></li>
+        </ul>
+    </div>
+
+    <!-- Ícono de hamburguesa -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="container">
+        <h1>Calendario de Actividades Editable - 12 Fases</h1>
+        <div class="calendar">
+            <div class="calendar-grid">
+                <div class="phase" data-phase="1">Fase 1</div>
+                <div class="phase" data-phase="2">Fase 2</div>
+                <div class="phase" data-phase="3">Fase 3</div>
+                <div class="phase" data-phase="4">Fase 4</div>
+                <div class="phase" data-phase="5">Fase 5</div>
+                <div class="phase" data-phase="6">Fase 6</div>
+                <div class="phase" data-phase="7">Fase 7</div>
+                <div class="phase" data-phase="8">Fase 8</div>
+                <div class="phase" data-phase="9">Fase 9</div>
+                <div class="phase" data-phase="10">Fase 10</div>
+                <div class="phase" data-phase="11">Fase 11</div>
+                <div class="phase" data-phase="12">Fase 12</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menu = document.getElementById('menu');
+        const hamburger = document.getElementById('hamburger');
+
+        // Mostrar/ocultar menú lateral
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
